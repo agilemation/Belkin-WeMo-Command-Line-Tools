@@ -1,0 +1,376 @@
+#!/bin/bash
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Belkin WeMo Control Script                                                   #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Exit Codes                                                                   #
+#==============================================================================#
+# 10 Main: Argument Error                                                      #
+# 11 Main: Run Action Error                                                    #
+# 20 restPostXmlStdinBelkinSoap: Argument Error                                #
+# 21 restPostXmlStdinBelkinSoap: Missing/Empty URL                             #
+# 22 restPostXmlStdinBelkinSoap: Missing/Emtpy SOAP Header                     #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+
+USAGE_TEXT="
+Usage: ${0} -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]]
+
+Arguments:
+    [ -h | --host ]    IP_ADDRESS | HOSTNAME
+    [ -a | --action ]  ON | OFF | GETSTATE | GETSIGNALSTRENGTH | GETNAME | SETNAME NAME
+
+Optional Arguments: 
+    [ -s | --silent ]        
+    [ -v | --verbose ]        
+    [ -V | --very-verbose ]   } 
+    [ -t | --trace ]          } [ -tt | --trace-time ]  
+    [ -T | --trace-raw ]      }"
+
+# Core Functions and Alias definitions Used For Script Setup
+getScriptFile () { basename "${BASH_SOURCE[0]}" ; } # This filename as executed
+getScriptPath () { local f="${BASH_SOURCE[0]}" ; local p ; while test -L "${f}"
+  do p="$( cd -P "$( dirname "${f}" )" && pwd )" ; f="$( readlink "${f}" )" && 
+  f="${p}/${f}" ; done ; p="$( cd -P "$( dirname "${f}" )" && pwd )" ; 
+  printf "%s\n" "${p}" ; }
+alias handleOutput='cat -'  # Overide this if you want to affect the output
+
+# Core Variables
+TITLE="Belkin WeMo Control Script"
+VERSION="0.0.1"
+DESCRIPTION="Script to control the automation of the Belkin WeMo power switch"
+SCRIPTpath="$( getScriptPath )"
+SCRIPTfile="$( getScriptFile )"
+
+# Source any external files needed
+. "${SCRIPTpath}/functions.inc.sh"
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Local Functions                                                              #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+usage ()
+{
+    # Report usage to the user as follows
+    printf "%s\n\n" "${USAGE_TEXT}"
+}
+
+restPostXmlStdinBelkinSoap ()
+{
+    # This funciton takes an XML SOAP payload from Standard In and creates an
+    # HTTP POST that it submits to the Belkin WeMo, it offers variuous levels of
+    # debug, nameley - [[ -v | --verbose ]            [ -t | --trace]
+    #                   [ -T | --trace-raw ]]  opt: [[ -tt | --trace-time ]]
+    # N.B. Trace Time is an optional addition to append the times to each of the
+    # Previous forms of debugging.
+
+    # Parse Arguments
+    local URL=""
+    local SOAP_HEADER=""
+    local VERBOSE_FLAGstr=""
+    local TRACE_FLAGstr=""
+    local TRACE_TIME_FLAGstr=""
+    while testArgs
+    do
+        case "${1}" in
+            -u | --url )
+                shift
+                URL="${1}"
+                shift
+                ;;
+            -s | --soap )
+                shift
+                SOAP_HEADER="${1}"
+                shift
+                ;;
+            -v | --verbose )
+                shift
+                VERBOSE_FLAGstr="--verbose"
+                ;;
+            -t | --trace )
+                shift
+                TRACE_FLAGstr="--trace-ascii -"
+                ;;
+            -T | --trace-raw )
+                shift
+                TRACE_FLAGstr="--trace -"
+                ;;
+            -tt | --trace-time )
+                shift
+                TRACE_TIME_FLAGstr="--trace-time"
+                ;;
+            * )
+                echoError "${FUNCNAME}: The argument '${1}' of remaining arguments '$@' is unhandled, Exiting..."
+                shift $#
+                finish 20
+                ;;
+        esac
+    done
+
+    # Final check before executing
+    testEmpty "${URL}" && echoError "${FUNCNAME}: You must provide a URL" && finish 21
+    testEmpty "${SOAP_HEADER}" && echoError "${FUNCNAME}: You must provide a SOAP_HEADER" && finish 22
+
+    # Start of curl execution
+    curl                                                                       \
+       --silent                                                                \
+       --show-error                                                            \
+       ${VERBOSE_FLAGstr}                                                      \
+       ${TRACE_FLAGstr}                                                        \
+       ${TRACE_TIME_FLAGstr}                                                   \
+       --http1.0                                                               \
+       --user-agent ''                                                         \
+       --request POST                                                          \
+       --header 'Accept: '                                                     \
+       --header 'Content-type: text/xml; charset="utf-8"'                      \
+       --header 'SOAPACTION: "'"${SOAP_HEADER}"'"'                             \
+       --data @-                                                               \
+       --url "${URL}"
+}
+
+filterExtractValue ()
+{
+    # If we are running in any of the debug modes, we don't want to alter output
+    if testBoolTrue "${EXTRACT_VALUE_FROM_RESPONSE}"
+    then
+        # Normal run, so lets grab just the value the user wants to see
+        grep '<BinaryState>\|<SignalStrength>\|<FriendlyName>'                 |
+            cut -d '>' -f2                                                     |
+            cut -d '<' -f1
+    else
+        # Running in a debug/verbose/trace mode so lets just let it pass through
+        cat -
+        printf '\n'
+    fi
+}
+
+filterHumanizeBinary ()
+{
+    # If we are running in any of the debug modes, we don't want to alter output
+    if testBoolTrue "${EXTRACT_VALUE_FROM_RESPONSE}"
+    then
+        # Normal run, so lets change '0's to OFF and '1's to ON
+        sed -e 's/0/OFF/g' -e 's/1/ON/g'
+    else
+        # Running in a debug/verbose/trace mode so lets just let it pass through
+        cat -
+    fi
+}
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Execution Start Point - Martial Arguments                                    #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+EXTRACT_VALUE_FROM_RESPONSE="TRUE"
+RUN_ACTION=""
+SET_NAME=""
+VERBOSE_FLAGstr=""
+TRACE_FLAGstr=""
+TRACE_TIME_FLAGstr=""
+while testArgs
+do
+    case ${1} in
+        -h | --host )
+            shift
+            DEVICE_HOST="${1}"
+            shift
+            ;;
+        -a | --action )
+            shift
+            case ${1} in
+                [Gg][Ee][Tt][Ss][Tt][Aa][Tt][Ee]                                        | \
+                [Oo][Nn]                                                                | \
+                [Oo][Ff][Ff]                                                            | \
+                [Gg][Ee][Tt][Ss][Ii][Gg][Nn][Aa][Ll][Ss][Tt][Rr][Ee][Nn][Gg][Tt][Hh]    | \
+                [Gg][Ee][Tt][Nn][Aa][Mm][Ee] )
+                    RUN_ACTION="${1}"
+                    shift
+                    ;;
+                [Ss][Ee][Tt][Nn][Aa][Mm][Ee] )
+                    RUN_ACTION="${1}"
+                    shift
+                    SET_NAME="${1}"
+                    shift
+                    ;;
+                * )
+                    echoError "${SCRIPTfile}: The argument given as an action '${1}' of remaining arguments '$@' is unhandled, Exiting..."
+                    usage
+                    shift $#
+                    finish 11
+                    ;;
+            esac
+            ;;
+        -s | --silent )
+            shift
+            alias handleOutput='toDevNull'  # Overriding the pass-through def. above
+            ;;
+        -v | --verbose )
+            shift
+            EXTRACT_VALUE_FROM_RESPONSE="FALSE"
+            ;;
+        -V | --very-verbose )
+            shift
+            VERBOSE_FLAGstr="--verbose"
+            EXTRACT_VALUE_FROM_RESPONSE="FALSE"
+            ;;
+        -t | --trace )
+            shift
+            TRACE_FLAGstr="--trace"
+            EXTRACT_VALUE_FROM_RESPONSE="FALSE"
+            ;;
+        -T | --trace-raw )
+            shift
+            TRACE_FLAGstr="--trace-raw"
+            EXTRACT_VALUE_FROM_RESPONSE="FALSE"
+            ;;
+        -tt | --trace-time )
+            shift
+            TRACE_TIME_FLAGstr="--trace-time"
+            ;;
+        * )
+            echo "The argument '${1}' of remaining arguments '$@' is unhandled, Exiting..."
+            usage
+            shift $#
+            finish 10
+            ;;
+    esac
+done
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Identify TCP port to use                                                     #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+PORTTEST="$( curl --silent ${DEVICE_HOST}:49153 | grep "404" )"
+if testEmpty "${PORTTEST}"
+then
+    PORT=49152
+else
+    PORT=49153
+fi
+
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+# Final test that we have everything we need to run, then do it...             #
+#123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
+if testEmpty "${DEVICE_HOST}" || testEmpty "${RUN_ACTION}"
+then
+    usage
+else
+    case "${RUN_ACTION}" in
+    [Gg][Ee][Tt][Ss][Tt][Aa][Tt][Ee] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:GetBinaryState xmlns:u="urn:Belkin:service:basicevent:1" />
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#GetBinaryState'            \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        filterHumanizeBinary                                                   |
+        handleOutput
+        ;;
+    [Oo][Nn] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:SetBinaryState xmlns:u="urn:Belkin:service:basicevent:1">
+                    <BinaryState>1</BinaryState>
+                </u:SetBinaryState>
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#SetBinaryState'            \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        filterHumanizeBinary                                                   |
+        handleOutput
+        ;;
+    [Oo][Ff][Ff] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:SetBinaryState xmlns:u="urn:Belkin:service:basicevent:1">
+                    <BinaryState>0</BinaryState>
+                </u:SetBinaryState>
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#SetBinaryState'            \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        filterHumanizeBinary                                                   |
+        handleOutput
+        ;;
+    [Gg][Ee][Tt][Ss][Ii][Gg][Nn][Aa][Ll][Ss][Tt][Rr][Ee][Nn][Gg][Tt][Hh] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:GetSignalStrength xmlns:u="urn:Belkin:service:basicevent:1">
+                    <GetSignalStrength>0</GetSignalStrength>
+                </u:GetSignalStrength>
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#GetSignalStrength'         \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        handleOutput
+        ;;
+    [Gg][Ee][Tt][Nn][Aa][Mm][Ee] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:GetFriendlyName xmlns:u="urn:Belkin:service:basicevent:1">
+                </u:GetFriendlyName>
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#GetFriendlyName'           \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        handleOutput
+        ;;
+    [Ss][Ee][Tt][Nn][Aa][Mm][Ee] )
+        printf '%s\n'                                                          \
+        '<?xml version="1.0" encoding="utf-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+                    s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <s:Body>
+                <u:ChangeFriendlyName xmlns:u="urn:Belkin:service:basicevent:1">
+                    <FriendlyName>'"${SET_NAME}"'</FriendlyName>
+                </u:ChangeFriendlyName>
+            </s:Body>
+        </s:Envelope>'                                                         |
+        restPostXmlStdinBelkinSoap                                             \
+            ${VERBOSE_FLAGstr} ${TRACE_FLAGstr} ${TRACE_TIME_FLAGstr}          \
+            --soap 'urn:Belkin:service:basicevent:1#ChangeFriendlyName'        \
+            --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
+        filterExtractValue                                                     |
+        handleOutput
+        ;;
+    "" )
+        echo
+        echoError "${SCRIPTfile}: Need to specify an ACTION as an argument"
+        usage
+        ;;
+    * )
+        echo
+        echoError "${SCRIPTfile}: Action Not Recognized: '${RUN_ACTION}'"
+        usage
+        ;;
+    esac
+fi
