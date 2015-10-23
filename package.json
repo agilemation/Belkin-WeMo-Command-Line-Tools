@@ -1,0 +1,31 @@
+{
+  "name": "belkin-wemo-command-line-tools",
+  "version": "1.0.0",
+  "description": "Script to control the automation of the Belkin WeMo power switch",
+  "main": "wemo",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools.git"
+  },
+  "keywords": [
+    "belkin",
+    "wemo",
+    "script",
+    "automate",
+    "rest",
+    "bash",
+    "linux",
+    "ci",
+    "automation",
+    "home-automation"
+  ],
+  "author": "James Borkowski",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools/issues"
+  },
+  "homepage": "https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools#readme"
+}
