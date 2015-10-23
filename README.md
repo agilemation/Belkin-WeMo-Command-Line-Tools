@@ -1,6 +1,6 @@
 # Belkin-WeMo-Command-Line-Tools
 
-This package provides a 'wemo' command that can be used to controll your Belkin WeMo power switch (and can be easialy extended to cater for other similar devices or new methods not yet implemented).
+This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easialy extended to cater for other similar devices or new methods not yet implemented).
 
 ## Installation
 For global installation of the package use:
