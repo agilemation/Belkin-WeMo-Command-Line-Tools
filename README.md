@@ -5,9 +5,9 @@ This package provides a 'wemo' command that can be used to control your Belkin W
 ## Installation
 ### Global
 For global installation of the package use:
-
+```
     $ npm install -g belkin-wemo-command-line-tools
-
+```
 That will install the latest version of the package that has hit the NPM repository, globally to your system, (usually in /usr/local/bin) which as long as that is in your PATH variable, you can then simply run the 'wemo' command whenever you want without having to worry about where it is.
 
 ### Local
@@ -16,7 +16,7 @@ For local installation, if you run `npm install belkin-wemo-command-line-tools` 
 # Basic Usage
 ## Getting started with the CLI
 If you have globally installed the 'wemo' command, you can now run it in your terminal without any arguments, which will show you the usage page:
-
+```
     $ wemo
 
     Usage: /usr/local/bin/wemo -h [ IP/HOSTNAME ]                             \
@@ -34,11 +34,13 @@ If you have globally installed the 'wemo' command, you can now run it in your te
         [ -V | --very-verbose ]   } 
         [ -t | --trace ]          } [ -tt | --trace-time ]  
         [ -T | --trace-raw ]      }
+```
 
 ## Getting the state
 - To get the state you can use a command such as
-
-    `$ wemo --host powerswitch1.lnd --action GETSTATE`
+```
+$ wemo --host powerswitch1.lnd --action GETSTATE
+```
 With no other flags, as long as the switch can be contacted, the script should return either `ON` or `OFF` depending on its current state.
 
 ## Turning a switch ON or OFF
