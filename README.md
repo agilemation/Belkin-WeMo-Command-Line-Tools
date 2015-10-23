@@ -64,13 +64,13 @@ With no other flags, as long as the switch can be contacted, the script should r
 ```
 $ wemo --host powerswitch1.lnd --action GETNAME
 ```
-Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname that I ensure points at a fixed IP address that is issued by the local DHCP server (using the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called. 
+This command should upon successful execution return the name that the switch believes it is called. 
 
 ## Setting the switch name
 - To set the name that the switch is configured to think it is you can use a command such as
 ```
 $ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]
 ```
+Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname.  I point that hostname at a fixed IP address, one that is issued by a DHCP server (and ensured static as it is reserved for the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called. 
 
 Enjoy!
-
