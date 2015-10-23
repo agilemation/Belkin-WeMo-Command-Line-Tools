@@ -1,6 +1,6 @@
 # Belkin-WeMo-Command-Line-Tools
 
-This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easialy extended to cater for other similar devices or new methods not yet implemented).
+This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).
 
 ## Installation
 ### Global
@@ -39,6 +39,7 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 - To get the state you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETSTATE`
+With no other flags, as long as the switch can be contacted, the script should return either `ON` or `OFF` depending on its current state.
 
 ## Turning a switch ON or OFF
 - To turn a switch ON or OFF you can use a command such as...
@@ -51,11 +52,13 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 - To get the signal strength of the switches WiFi connection you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH`
+With no other flags, as long as the switch can be contacted, the script should return a number that relates to the current signal strength.
 
 ## Getting the switch name
 - To get the name that the switch is configured to think it is you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETNAME`
+Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname that I ensure points at a fixed IP address that is issued by the local DHCP server (using the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called. 
 
 ## Setting the switch name
 - To set the name that the switch is configured to think it is you can use a command such as
