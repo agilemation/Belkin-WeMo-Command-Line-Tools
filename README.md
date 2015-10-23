@@ -42,5 +42,5 @@ To turn a switch ON or OFF you can use a command such as...
 (or)
 
     `$ wemo --host powerswitch1.lnd --action OFF`
-
+    
 - Getting the signal strength
