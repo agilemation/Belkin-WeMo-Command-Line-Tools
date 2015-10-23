@@ -28,4 +28,16 @@ You can then run the command from anywhere (as long as you used the -g global fl
         [ -t | --trace ]          } [ -tt | --trace-time ]  
         [ -T | --trace-raw ]      }
 
+# Basic Usage
+- Getting the state
+To get the state you can use a command as such:
+    $ wemo --host powerswitch1.lnd --action GETSTATE
+
+- Turning a switch ON or OFF
+To turn a switch ON or OFF you can use a command as such:
+    $ wemo --host powerswitch1.lnd --action ON
+(or)
+    $ wemo --host powerswitch1.lnd --action OFF
+
+
 
