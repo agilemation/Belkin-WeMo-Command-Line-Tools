@@ -42,3 +42,19 @@ To turn a switch ON or OFF you can use a command such as...
     `$ wemo --host powerswitch1.lnd --action OFF`
     
 - Getting the signal strength
+To get the signal strength of the switches WiFi connection you can use a command such as
+
+    `$ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH`
+
+- Getting the switch name
+To get the name that the switch is configured to think it is you can use a command such as
+
+    `$ wemo --host powerswitch1.lnd --action GETNAME`
+
+- Setting the switch name
+To set the name that the switch is configured to think it is you can use a command such as
+
+    `$ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]`
+
+Enjoy!
+
