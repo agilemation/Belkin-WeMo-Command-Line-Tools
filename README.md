@@ -71,6 +71,22 @@ This command should upon successful execution return the name that the switch be
 ```
 $ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]
 ```
-Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname.  I point that hostname at a fixed IP address, one that is issued by a DHCP server (and ensured static as it is reserved for the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called. 
+Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname.  I point that hostname at a fixed IP address, one that is issued by a DHCP server (and ensured static as it is reserved for the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called.  This brings us nicely to...
+
+## Networking
+The Belkin WeMo switches that I have come across so far have all served their REST controll interface on TCP port `49153`, however it is roumored that there are some out there in the wild that use the TCP port `49152`.  If you have to access the switch from behind a firewall or need to connect to it from the internet (if your home network is using NAT on your internet connections router) then you will need to make sure that you either allow both of these ports to traverse, or identify which one it uses by using the `telnet` command to confirm it which is open.  For e.g.
+```
+$ telnet powerswitch1.lnd 49153
+```
+If it is not the port that it runs on you will get:
+```
+nodename nor servname provided, or not know
+```
+...whereas if it is the port that your switch is listening on, you will get something like:
+```
+Trying 111.111.111.111...
+Connected to powerswitch1.lnd.
+Escape character is '^]'.
+```
 
 Enjoy!
