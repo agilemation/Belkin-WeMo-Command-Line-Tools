@@ -2,13 +2,18 @@
 
 This package provides a 'wemo' command that can be used to controll your Belkin WeMo power switch (and can be easialy extended to cater for other similar devices or new methods not yet implemented).
 
+## Installation
 For global installation of the package use:
 
     $ npm install -g belkin-wemo-command-line-tools
 
 That will install the latest version of the package that has hit the NPM repository.
 
-You can then run the command from anywhere (as long as you used the -g global flag) and doing so without any arguments will show you the usage page as such:
+You can then run the command from anywhere (as long as you used the -g global flag), if you run `npm install belkin-wemo-command-line-tools` without the `-g` flag, it will install it into your project locally under `./node_modules/belkin-wemo-command-line-tools` - doing this will require you to prefix the wemo command with a path that can locate it.
+
+# Basic Usage
+## Getting started with the CLI
+If you have globally installed the 'wemo' command, you can now run it in your terminal without any arguments, which will show you the usage page:
 
     $ wemo
 
@@ -28,7 +33,6 @@ You can then run the command from anywhere (as long as you used the -g global fl
         [ -t | --trace ]          } [ -tt | --trace-time ]  
         [ -T | --trace-raw ]      }
 
-# Basic Usage
 ## Getting the state
 - To get the state you can use a command such as
 
