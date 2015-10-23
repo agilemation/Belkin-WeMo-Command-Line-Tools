@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools.git"
   },
+  "preferGlobal": true,
+    "bin": {
+      "wemo": "./wemo"
+  },
   "keywords": [
     "belkin",
     "wemo",
