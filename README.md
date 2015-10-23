@@ -50,8 +50,9 @@ With no other flags, as long as the switch can be contacted, the script should r
     
 ## Getting the signal strength
 - To get the signal strength of the switches WiFi connection you can use a command such as
-
-    `$ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH`
+```
+$ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH
+```
 With no other flags, as long as the switch can be contacted, the script should return a number that relates to the current signal strength.
 
 ## Getting the switch name
