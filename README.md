@@ -43,11 +43,13 @@ With no other flags, as long as the switch can be contacted, the script should r
 
 ## Turning a switch ON or OFF
 - To turn a switch ON or OFF you can use a command such as...
-
-    `$ wemo --host powerswitch1.lnd --action ON`  (or)
-
-    `$ wemo --host powerswitch1.lnd --action OFF`
-    
+```
+$ wemo --host powerswitch1.lnd --action ON
+```
+(or)
+```
+$ wemo --host powerswitch1.lnd --action OFF
+```
 ## Getting the signal strength
 - To get the signal strength of the switches WiFi connection you can use a command such as
 ```
@@ -57,14 +59,16 @@ With no other flags, as long as the switch can be contacted, the script should r
 
 ## Getting the switch name
 - To get the name that the switch is configured to think it is you can use a command such as
-
-    `$ wemo --host powerswitch1.lnd --action GETNAME`
+```
+$ wemo --host powerswitch1.lnd --action GETNAME
+```
 Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname that I ensure points at a fixed IP address that is issued by the local DHCP server (using the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called. 
 
 ## Setting the switch name
 - To set the name that the switch is configured to think it is you can use a command such as
-
-    `$ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]`
+```
+$ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]
+```
 
 Enjoy!
 
