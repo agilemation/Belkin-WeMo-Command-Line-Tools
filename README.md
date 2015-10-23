@@ -4,13 +4,13 @@ This package provides a 'wemo' command that can be used to controll your Belkin 
 
 For global installation of the package use:
 
-  $ npm install -g belkin-wemo-command-line-tools
+    $ npm install -g belkin-wemo-command-line-tools
 
 That will install the latest version of the package that has hit the NPM repository.
 
 You can then run the command from anywhere (as long as you used the -g global flag) and doing so without any arguments will show you the usage page as such:
 
-$ wemo
+    $ wemo
 
     Usage: /usr/local/bin/wemo -h [ IP/HOSTNAME ]                             \
                                -a [ ACTION ]                                  \
