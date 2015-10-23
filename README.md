@@ -37,14 +37,10 @@ To get the state you can use a command such as
 - Turning a switch ON or OFF
 To turn a switch ON or OFF you can use a command such as...
 
-
-    $ wemo --host powerswitch1.lnd --action ON
-
+    `$ wemo --host powerswitch1.lnd --action ON`
     
 (or)
 
+    `$ wemo --host powerswitch1.lnd --action OFF`
 
-    $ wemo --host powerswitch1.lnd --action OFF
-
-
-
+- Getting the signal strength
