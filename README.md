@@ -12,7 +12,10 @@ You can then run the command from anywhere (as long as you used the -g global fl
 
 $ wemo
 
-    Usage: /usr/local/bin/wemo -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]]
+    Usage: /usr/local/bin/wemo -h [ IP/HOSTNAME ]                             \
+                               -a [ ACTION ]                                  \
+                               [[ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]]   \
+                               [[ -tt ]]
 
     Arguments:
         [ -h | --host ]    IP_ADDRESS | HOSTNAME
