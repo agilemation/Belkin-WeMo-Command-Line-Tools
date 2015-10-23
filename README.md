@@ -78,9 +78,10 @@ The Belkin WeMo switches that I have come across so far have all served their RE
 ```
 $ telnet powerswitch1.lnd 49153
 ```
-If it is not the port that it runs on you will get:
+If it is not the port that it runs on you will get something such as:
 ```
-nodename nor servname provided, or not know
+telnet: connect to address 127.0.0.123: Connection refused
+telnet: Unable to connect to remote host
 ```
 ...whereas if it is the port that your switch is listening on, you will get something like:
 ```
