@@ -30,7 +30,7 @@ You can then run the command from anywhere (as long as you used the -g global fl
 
 # Basic Usage
 - Getting the state
-To get the state you can use a command such as
+  - To get the state you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETSTATE`
 
