@@ -1,8 +1,9 @@
 {
   "name": "belkin-wemo-command-line-tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Script to control the automation of the Belkin WeMo power switch",
   "main": "wemo",
+  "readme": "README.md",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
