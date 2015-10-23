@@ -43,4 +43,3 @@ To turn a switch ON or OFF you can use a command as such:
     $ wemo --host powerswitch1.lnd --action OFF
 
 
-
