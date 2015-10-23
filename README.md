@@ -29,30 +29,30 @@ You can then run the command from anywhere (as long as you used the -g global fl
         [ -T | --trace-raw ]      }
 
 # Basic Usage
-- Getting the state
-  - To get the state you can use a command such as
+## Getting the state
+- To get the state you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETSTATE`
 
-- Turning a switch ON or OFF
-To turn a switch ON or OFF you can use a command such as...
+## Turning a switch ON or OFF
+- To turn a switch ON or OFF you can use a command such as...
 
     `$ wemo --host powerswitch1.lnd --action ON`  (or)
 
     `$ wemo --host powerswitch1.lnd --action OFF`
     
-- Getting the signal strength
-To get the signal strength of the switches WiFi connection you can use a command such as
+## Getting the signal strength
+- To get the signal strength of the switches WiFi connection you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH`
 
-- Getting the switch name
-To get the name that the switch is configured to think it is you can use a command such as
+## Getting the switch name
+- To get the name that the switch is configured to think it is you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action GETNAME`
 
-- Setting the switch name
-To set the name that the switch is configured to think it is you can use a command such as
+## Setting the switch name
+- To set the name that the switch is configured to think it is you can use a command such as
 
     `$ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]`
 
