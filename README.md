@@ -32,7 +32,7 @@ You can then run the command from anywhere (as long as you used the -g global fl
 - Getting the state
 To get the state you can use a command such as
 
-    $ wemo --host powerswitch1.lnd --action GETSTATE
+    `$ wemo --host powerswitch1.lnd --action GETSTATE`
 
 - Turning a switch ON or OFF
 To turn a switch ON or OFF you can use a command such as...
