@@ -34,14 +34,16 @@ getScriptPath () { local f="${BASH_SOURCE[0]}" ; local p ; while test -L "${f}"
   do p="$( cd -P "$( dirname "${f}" )" && pwd )" ; f="$( readlink "${f}" )" && 
   f="${p}/${f}" ; done ; p="$( cd -P "$( dirname "${f}" )" && pwd )" ; 
   printf "%s\n" "${p}" ; }
+getNpmPackageVersion () { cat "${SCRIPTpath}/package.json" | grep -i version |
+  head -1 | awk -F: '{ print $2 }' | sed 's/[",\ ]//g' ; } # SSoT Version
 alias handleOutput='cat -'  # Overide this if you want to affect the output
 
 # Core Variables
 TITLE="Belkin WeMo Control Script"
-VERSION="1.0.7"
-DESCRIPTION="Script to control the automation of the Belkin WeMo power switch"
+DESCRIPTION="Script to control the Belkin WeMo power switch"
 SCRIPTpath="$( getScriptPath )"
 SCRIPTfile="$( getScriptFile )"
+VERSION="$( getNpmPackageVersion )" # Reads the version from package.json
 
 # Source any external files needed
 . "${SCRIPTpath}/functions.inc.sh"
@@ -52,6 +54,8 @@ SCRIPTfile="$( getScriptFile )"
 usage ()
 {
     # Report usage to the user as follows
+    printf "\n%s\n" "${TITLE} v${VERSION}"
+    printf "%s\n"   "${DESCRIPTION}"
     printf "%s\n\n" "${USAGE_TEXT}"
 }
 
@@ -169,6 +173,11 @@ TRACE_TIME_FLAGstr=""
 while testArgs
 do
     case ${1} in
+        -v | --version )
+            shift
+            echo "v${VERSION}"
+            finish 0
+            ;;
         -h | --host )
             shift
             DEVICE_HOST="${1}"
