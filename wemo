@@ -15,7 +15,7 @@
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 
 USAGE_TEXT="
-Usage: ${0} -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]]
+Usage: ${0} -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -ver ] | [ -? ] | [ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]] 
 
 Arguments:
     [ -h | --host ]    IP_ADDRESS | HOSTNAME
@@ -26,7 +26,9 @@ Optional Arguments:
     [ -v | --verbose ]        
     [ -V | --very-verbose ]   } 
     [ -t | --trace ]          } [ -tt | --trace-time ]  
-    [ -T | --trace-raw ]      }"
+    [ -T | --trace-raw ]      }
+    [ -ver | --version ]
+    [ -? | --help ]"       
 
 # Core Functions and Alias definitions Used For Script Setup
 getScriptFile () { basename "${BASH_SOURCE[0]}" ; } # This filename as executed
@@ -173,7 +175,7 @@ TRACE_TIME_FLAGstr=""
 while testArgs
 do
     case ${1} in
-        -v | --version )
+        -ver | --version )
             shift
             echo "v${VERSION}"
             finish 0
@@ -234,6 +236,11 @@ do
         -tt | --trace-time )
             shift
             TRACE_TIME_FLAGstr="--trace-time"
+            ;;
+        -? | --help )
+            shift
+            usage
+            finish 0
             ;;
         * )
             echo "The argument '${1}' of remaining arguments '$@' is unhandled, Exiting..."
