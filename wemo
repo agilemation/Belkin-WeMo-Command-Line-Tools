@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
-# Belkin WeMo Control Script                                                   #
+# Belkin WeMo Command Line Tool                                                #
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
@@ -14,6 +14,7 @@
 # 22 restPostXmlStdinBelkinSoap: Missing/Emtpy SOAP Header                     #
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 
+COPYRIGHT="2015 James Borkowski / Agilemation" # © Notice, displayed with --help
 USAGE_TEXT="
 Usage: ${0} -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -ver ] | [ -? ] | [ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]] 
 
@@ -36,16 +37,16 @@ getScriptPath () { local f="${BASH_SOURCE[0]}" ; local p ; while test -L "${f}"
   do p="$( cd -P "$( dirname "${f}" )" && pwd )" ; f="$( readlink "${f}" )" && 
   f="${p}/${f}" ; done ; p="$( cd -P "$( dirname "${f}" )" && pwd )" ; 
   printf "%s\n" "${p}" ; }
-getNpmPackageVersion () { cat "${SCRIPTpath}/package.json" | grep -i version |
-  head -1 | awk -F: '{ print $2 }' | sed 's/[",\ ]//g' ; } # SSoT Version
+getJsonValueSimple () { grep -i "${1}" "${2}" | head -1 | awk -F: \
+  '{ print $2 }' | sed -e 's/[",]//g' -e 's/^\ //g' ; } 
 alias handleOutput='cat -'  # Overide this if you want to affect the output
 
 # Core Variables
-TITLE="Belkin WeMo Control Script"
-DESCRIPTION="Script to control the Belkin WeMo power switch"
+TITLE="Belkin WeMo Command Line Tool"
 SCRIPTpath="$( getScriptPath )"
 SCRIPTfile="$( getScriptFile )"
-VERSION="$( getNpmPackageVersion )" # Reads the version from package.json
+VERSION="$( getJsonValueSimple "version" "${SCRIPTpath}/package.json" )"
+DESCRIPTION="$( getJsonValueSimple "description" "${SCRIPTpath}/package.json" )"
 
 # Source any external files needed
 . "${SCRIPTpath}/functions.inc.sh"
@@ -57,7 +58,8 @@ usage ()
 {
     # Report usage to the user as follows
     printf "\n%s\n" "${TITLE} v${VERSION}"
-    printf "%s\n"   "${DESCRIPTION}"
+    printf "%s\n\n"   "© ${COPYRIGHT}"
+    printf "%s\n"   "${DESCRIPTION}" | fold -sw 80
     printf "%s\n\n" "${USAGE_TEXT}"
 }
 
