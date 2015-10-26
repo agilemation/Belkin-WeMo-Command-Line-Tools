@@ -14,9 +14,9 @@
 # 22 restPostXmlStdinBelkinSoap: Missing/Emtpy SOAP Header                     #
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 
-COPYRIGHT="2015 James Borkowski / Agilemation" # © Notice, displayed with --help
-USAGE_TEXT="
-Usage: ${0} -h [ IP/HOSTNAME ] -a [ ACTION ] [[ -ver ] | [ -? ] | [ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]] 
+COPYRIGHT="2015 James Borkowski @github:agilemation" # © Notice, displayed with --help
+ACKNOWLEDGEMENT="Third-party trademarks mentioned are the property of their respective owners."
+USAGE_TEXT="-h [ IP/HOSTNAME ] -a [ ACTION ] [[ -ver ] | [ -? ]] | [ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]] [[ -tt ]] 
 
 Arguments:
     [ -h | --host ]    IP_ADDRESS | HOSTNAME
@@ -29,7 +29,7 @@ Optional Arguments:
     [ -t | --trace ]          } [ -tt | --trace-time ]  
     [ -T | --trace-raw ]      }
     [ -ver | --version ]
-    [ -? | --help ]"       
+    [ -? | --help ]"
 
 # Core Functions and Alias definitions Used For Script Setup
 getScriptFile () { basename "${BASH_SOURCE[0]}" ; } # This filename as executed
@@ -58,9 +58,10 @@ usage ()
 {
     # Report usage to the user as follows
     printf "\n%s\n" "${TITLE} v${VERSION}"
-    printf "%s\n\n"   "© ${COPYRIGHT}"
-    printf "%s\n"   "${DESCRIPTION}" | fold -sw 80
-    printf "%s\n\n" "${USAGE_TEXT}"
+    printf "\n%s\n" "${DESCRIPTION}" | fold -sw 80
+    printf "\n%s\n" "Copyright © ${COPYRIGHT}"
+    printf "%s\n\n"   "${ACKNOWLEDGEMENT}"
+    printf "%s\n\n" "Usage: ${SCRIPTfile} ${USAGE_TEXT}"
 }
 
 restPostXmlStdinBelkinSoap ()

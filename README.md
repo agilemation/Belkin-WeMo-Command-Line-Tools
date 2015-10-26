@@ -19,21 +19,30 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 ```
     $ wemo
 
-    Usage: /usr/local/bin/wemo -h [ IP/HOSTNAME ]                             \
-                               -a [ ACTION ]                                  \
-                               [[ -s ] | [ -v ] | [ -V ] | [ -t ] | [ -T ]]   \
-                               [[ -tt ]]
+    Belkin WeMo Command Line Tool v1.0.11
+
+    Script to control the Belkin WeMo power switch written entirely in shell and 
+    constructed out of commands that every computer should already have
+
+    Copyright © 2015 James Borkowski, @github: agilemation
+    Third-party trademarks mentioned are the property of their respective owners.
+
+    Usage: wemo -h [ IP/HOSTNAME ] -a [ ACTION ]                         \
+                [[ -ver ] | [ -? ]] | [ -s ] | [[ -v ] | [ -V ] | [ -t ] | 
+                 [ -T ]] [[ -tt ]] 
 
     Arguments:
-        [ -h | --host ]    IP_ADDRESS | HOSTNAME
-        [ -a | --action ]  ON | OFF | GETSTATE | GETSIGNALSTRENGTH | GETNAME | SETNAME NAME
+    [ -h | --host ]    IP_ADDRESS | HOSTNAME
+    [ -a | --action ]  ON | OFF | GETSTATE | GETSIGNALSTRENGTH | GETNAME | SETNAME NAME
 
     Optional Arguments: 
-        [ -s | --silent ]        
-        [ -v | --verbose ]        
-        [ -V | --very-verbose ]   } 
-        [ -t | --trace ]          } [ -tt | --trace-time ]  
-        [ -T | --trace-raw ]      }
+    [ -s | --silent ]        
+    [ -v | --verbose ]        
+    [ -V | --very-verbose ]   } 
+    [ -t | --trace ]          } [ -tt | --trace-time ]  
+    [ -T | --trace-raw ]      }
+    [ -ver | --version ]
+    [ -? | --help ]
 ```
 
 ## Getting the state
