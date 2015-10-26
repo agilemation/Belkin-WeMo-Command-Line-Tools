@@ -1,6 +1,6 @@
 {
   "name": "belkin-wemo-command-line-tools",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Script to control the Belkin WeMo power switch, written entirely in shell and constructed out of commands that every computer should already have",
   "main": "wemo",
   "readmeFilename": "README.md",
