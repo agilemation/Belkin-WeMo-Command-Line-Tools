@@ -19,6 +19,15 @@ alias toDevNull='cat - >/dev/null 2>/dev/null'
 # Library Functions                                                            #
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 
+toot () { printf "%s" "$*" ; } # Output arguments on StdOut with no CR's
+tell () { printf "%s\n" "$*" ; } # Output with trailing CR regardless
+talk () { if testFileTerm 1 ; then printf "%s\n" "$*" ; else printf "%s" "$*" ; fi ; } # Output with new line if human
+yell () { printf "\n%s\n\n" "$*" ; } # Output prefixed with CR and trailing with 2 x CR's
+yelp () { printf "\n" "" ; } # Output a single CR regardless of output use.
+
+echoDebug () { testDebug && tell "Debug:$*" ; } # Conditional report function, only active if DEBUG='true'
+echoError () { talk ; tell "Error:$@" routeStdOutToStdErr ; } # Echo arguments to STD_ERR, if human prefix with CR
+
 toStdErr () { cat - 1>&2 ; }
 echoError () { printf '%s\n' "Error: $@" | toStdErr ; }
 

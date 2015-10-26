@@ -56,12 +56,28 @@ DESCRIPTION="$( getJsonValueSimple "description" "${SCRIPTpath}/package.json" )"
 #123456789o123456789o123456789o123456789o123456789o123456789o123456789o123456789
 usage ()
 {
-    # Report usage to the user as follows
+    # Leaving this here for a bit as it serves as a reminder that I am sane to
+    # have implemented my toot, tell, talk, yelp and yell comands as a fixed
+    # width echo command set - allowing avoidence of all this.....
     printf "\n%s\n" "${TITLE} v${VERSION}"
     printf "\n%s\n" "${DESCRIPTION}" | fold -sw 80
     printf "\n%s\n" "Copyright © ${COPYRIGHT}"
-    printf "%s\n\n"   "${ACKNOWLEDGEMENT}"
-    printf "%s\n\n" "Usage: ${SCRIPTfile} ${USAGE_TEXT}"
+    printf "%s\n"   "${ACKNOWLEDGEMENT}"
+    printf "%s\n\n" "Usage: 
+    $ ${SCRIPTfile} ${USAGE_TEXT}"
+}
+
+usage ()
+{
+    # Verify if we need this.....
+    # Report usage to the user as follows
+    yell "${TITLE} v${VERSION}"
+    tell "${DESCRIPTION}" | fold -sw 80
+    yelp
+    tell "Copyright © ${COPYRIGHT}"
+    tell "${ACKNOWLEDGEMENT}"
+    yell "Usage: 
+    $ ${SCRIPTfile} ${USAGE_TEXT}"
 }
 
 restPostXmlStdinBelkinSoap ()
