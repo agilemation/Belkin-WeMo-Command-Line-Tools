@@ -35,7 +35,8 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 
     Arguments:
     [ -h | --host ]    IP_ADDRESS | HOSTNAME
-    [ -a | --action ]  ON | OFF | GETSTATE | GETSIGNALSTRENGTH | GETNAME | SETNAME NAME
+    [ -a | --action ]  ON | OFF | GETSTATE | GETSIGNALSTRENGTH | GETNAME |
+                       SETNAME NAME
 
     Optional Arguments: 
     [ -s | --silent ]        
@@ -49,7 +50,7 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 
 ## Getting the state
 - To get the state you can use a command such as
-```
+```bash
 $ wemo --host powerswitch1.lnd --action GETSTATE
 ```
 With no other flags, as long as the switch can be contacted, the script should return either `ON` or `OFF` depending on its current state.
