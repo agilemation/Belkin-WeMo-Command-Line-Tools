@@ -1,5 +1,7 @@
 # Belkin-WeMo-Command-Line-Tools
 
+Install with npm https://www.npmjs.com/package/belkin-wemo-command-line-tools
+
 This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).
 
 ## Installation
