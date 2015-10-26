@@ -2,7 +2,8 @@
 
 <img align="center" src="WeMo.jpg"/>
 
-Install with NPM by going to the [NPM package page...](https://www.npmjs.com/package/belkin-wemo-command-line-tools#star) or, get deep down and dirty with the code by going to the [GitHub project page...](https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools)
+Install with NPM by going to the [NPM package page](https://www.npmjs.com/package/belkin-wemo-command-line-tools#star), or, to get deep down and dirty in the code you can jump to the [GitHub project page](https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools)
+
 ...not that you can get very dirty in such beautiful code :-)
 
 This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).  Written entirely out of base tools (such as curl, sed and awk) that will be on any current flavour of Linux/Unix (inc. Mac OSX) so this is a package that requires no external dependencies to be provided prior to use!
@@ -26,7 +27,7 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 ```
     $ wemo
 
-    Belkin WeMo Command Line Tool v1.0.20
+    Belkin WeMo Command Line Tool v1.0.21
 
     Script to control the Belkin WeMo power switch written entirely in shell
     and constructed out of commands that every computer should already have.
