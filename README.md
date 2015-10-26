@@ -23,8 +23,8 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 
     Belkin WeMo Command Line Tool v1.0.11
 
-    Script to control the Belkin WeMo power switch written entirely in shell and 
-    constructed out of commands that every computer should already have
+    Script to control the Belkin WeMo power switch written entirely in shell
+    and constructed out of commands that every computer should already have.
 
     Copyright © 2015 James Borkowski, @github: agilemation
     Third-party trademarks mentioned are the property of their respective owners.
