@@ -2,7 +2,7 @@
 
 Install with npm https://www.npmjs.com/package/belkin-wemo-command-line-tools
 
-This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).
+This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).  Written entirely out of base tools (such as curl, sed and awk) that will be on any current flavour of Linux/Unix (inc. Mac OSX) so this is a package that requires no external dependancies to be provided prior to use!
 
 ## Installation
 ### Global
@@ -57,37 +57,37 @@ With no other flags, as long as the switch can be contacted, the script should r
 
 ## Turning a switch ON or OFF
 - To turn a switch ON or OFF you can use a command such as...
-```
+```bash
 $ wemo --host powerswitch1.lnd --action ON
 ```
 (or)
-```
+```bash
 $ wemo --host powerswitch1.lnd --action OFF
 ```
 ## Getting the signal strength
 - To get the signal strength of the switches WiFi connection you can use a command such as
-```
+```bash
 $ wemo --host powerswitch1.lnd --action GETSIGNALSTRENGTH
 ```
 With no other flags, as long as the switch can be contacted, the script should return a number that relates to the current signal strength.
 
 ## Getting the switch name
 - To get the name that the switch is configured to think it is you can use a command such as
-```
+```bash
 $ wemo --host powerswitch1.lnd --action GETNAME
 ```
 This command should upon successful execution return the name that the switch believes it is called. 
 
 ## Setting the switch name
 - To set the name that the switch is configured to think it is you can use a command such as
-```
+```bash
 $ wemo --host powerswitch1.lnd --action SETNAME [NAME_TO_USE]
 ```
 Personally (for sanitys sake) I always name any switches I setup with the same name as their DNS hostname.  I point that hostname at a fixed IP address, one that is issued by a DHCP server (and ensured static as it is reserved for the switches Ethernet MAC address).  However, you can call yours anything you like, this command should upon successful execution return the name that the switch believes it is now called.  This brings us nicely to...
 
 ## Networking
 The Belkin WeMo switches that I have come across so far have all served their REST control interface on TCP port `49153`, however it is rumoured that there are some out there in the wild that use the TCP port `49152`.  If you have to access the switch from behind a firewall or need to connect to it from the internet (if your home network is using NAT on your internet connections router) then you will need to make sure that you either allow both of these ports to traverse, or identify which one it uses by using the `telnet` command to confirm it which is open.  For e.g.
-```
+```bash
 $ telnet powerswitch1.lnd 49153
 ```
 If it is not the port that it runs on you will get something such as:
