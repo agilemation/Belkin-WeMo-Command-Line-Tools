@@ -39,7 +39,7 @@ getScriptPath () { local f="${BASH_SOURCE[0]}" ; local p ; while test -L "${f}"
   printf "%s\n" "${p}" ; }
 getJsonValueSimple () { grep -i "${1}" "${2}" | head -1 | awk -F: \
   '{ print $2 }' | sed -e 's/[",]//g' -e 's/^\ //g' ; } 
-alias handleOutput='cat - | xmllint --format -'  # Overide this if you want to affect the output
+alias handleOutput='cat -' # Overide this if you want to affect the output
 
 # Core Variables
 TITLE="Belkin WeMo Command Line Tool"
@@ -151,6 +151,31 @@ restPostXmlStdinBelkinSoap ()
        --header 'SOAPACTION: "'"${SOAP_HEADER}"'"'                             \
        --data @-                                                               \
        --url "${URL}"
+}
+
+testExecAvailiable ()
+{
+    which "${1}" 1>/dev/null 2>/dev/null ;
+}
+
+filterXmlClean ()
+{
+    # Clean XML as long as we are not filtering the value from it
+    if testBoolTrue "${EXTRACT_VALUE_FROM_RESPONSE}"
+    then
+        # Make sure we have xmllint
+        if testExecAvailiable xmllint
+        then
+            # We do, lets use it
+            xmllint --format -
+        else
+            # We don't so lets just pass through
+            cat -
+        fi
+    else
+        # We are filtering the value so can't use xmllint as it's not well formed XML
+        cat -
+    fi
 }
 
 filterExtractValue ()
@@ -304,7 +329,8 @@ else
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
         filterHumanizeBinary                                                   |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     [Oo][Nn] )
         printf '%s\n'                                                          \
@@ -323,7 +349,8 @@ else
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
         filterHumanizeBinary                                                   |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     [Oo][Ff][Ff] )
         printf '%s\n'                                                          \
@@ -342,7 +369,8 @@ else
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
         filterHumanizeBinary                                                   |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     [Gg][Ee][Tt][Ss][Ii][Gg][Nn][Aa][Ll][Ss][Tt][Rr][Ee][Nn][Gg][Tt][Hh] )
         printf '%s\n'                                                          \
@@ -360,7 +388,8 @@ else
             --soap 'urn:Belkin:service:basicevent:1#GetSignalStrength'         \
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     [Gg][Ee][Tt][Nn][Aa][Mm][Ee] )
         printf '%s\n'                                                          \
@@ -377,7 +406,8 @@ else
             --soap 'urn:Belkin:service:basicevent:1#GetFriendlyName'           \
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     [Ss][Ee][Tt][Nn][Aa][Mm][Ee] )
         printf '%s\n'                                                          \
@@ -395,7 +425,8 @@ else
             --soap 'urn:Belkin:service:basicevent:1#ChangeFriendlyName'        \
             --url "http://${DEVICE_HOST}:${PORT}/upnp/control/basicevent1"     |
         filterExtractValue                                                     |
-        handleOutput
+        handleOutput                                                           |
+        filterXmlClean
         ;;
     "" )
         echo
