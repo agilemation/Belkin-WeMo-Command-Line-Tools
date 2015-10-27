@@ -39,7 +39,7 @@ getScriptPath () { local f="${BASH_SOURCE[0]}" ; local p ; while test -L "${f}"
   printf "%s\n" "${p}" ; }
 getJsonValueSimple () { grep -i "${1}" "${2}" | head -1 | awk -F: \
   '{ print $2 }' | sed -e 's/[",]//g' -e 's/^\ //g' ; } 
-alias handleOutput='cat -'  # Overide this if you want to affect the output
+alias handleOutput='cat - | xmllint --format -'  # Overide this if you want to affect the output
 
 # Core Variables
 TITLE="Belkin WeMo Command Line Tool"
