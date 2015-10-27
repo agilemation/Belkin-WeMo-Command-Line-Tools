@@ -160,8 +160,12 @@ testExecAvailiable ()
 
 filterXmlClean ()
 {
-    # Clean XML as long as we are not filtering the value from it
-    if testBoolTrue "${EXTRACT_VALUE_FROM_RESPONSE}"
+    # Clean XML as long as we are not filtering the value from it or using any of the
+    # trace modes of curl as that will muck the well formed XML output and make xmllint
+    # have issues
+    if  testBoolFalse "${EXTRACT_VALUE_FROM_RESPONSE}" &&
+        testEmpty     "${TRACE_FLAGstr}"               &&
+        testEmpty     "${TRACE_TIME_FLAGstr}"
     then
         # Make sure we have xmllint
         if testExecAvailiable xmllint
