@@ -6,9 +6,9 @@ Install with NPM by going to the [NPM package page](https://www.npmjs.com/packag
 
 ...not that you can get very dirty in such beautiful code :-)
 
-This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).  Written entirely out of base tools (such as curl, sed and awk) that will be on any current flavour of Linux/Unix (inc. Mac OSX) so this is a package that requires no external dependencies to be provided prior to use!
+This package provides a 'wemo' command that can be used to control your Belkin WeMo power switch (and can be easily extended to cater for other similar devices or new methods not yet implemented).  Written entirely out of lowest common denominator tools (such as curl, sed and awk) that will be on any current flavour of Linux/Unix (inc. Mac OSX) so this is a package that requires no external dependencies to be provided prior to use!
 
-I have been pleasantly surprised by the high initial uptake of this utility, only expected a few downloads but have had hundreds in the first few days!  Please file any issues/problem or bugs on github and will do my best to resolve.  Additionally, I look forward to any pull requests or suggestions for improvements from anyone who has any ideas for bettering the tool or approach.  Any newbie Bash/Shell Scripters that have had difficulty working with the language in the past may find working with this code a lot easier than they may have found "conventional" Bash/Shell they have worked on in the past.  This is due to the humanistic approach to language that I use to implement my scripts.  Again, I am very interested from anyone working or even reading the code as to how they find it as I am working on what will eventually become a new systems integration language in another thread so opinions are warmly welcomed!!!
+I have been pleasantly surprised by the high initial uptake of this utility, there must be a lot of these devices out there! :-)  Any problems/comments/suggestions, please get in touch via GitHub or by email agilemation@gmail.com
 
 N.B.  Initially inspired by the script found on this [Blog Post](http://moderntoil.com/?p=839) and with thanks to 'sklose' for putting the WSDL on a [GitHub Repository](https://raw.githubusercontent.com/sklose/WeMoWsdl/master/BasicService.wsdl)
 
@@ -29,7 +29,7 @@ If you have globally installed the 'wemo' command, you can now run it in your te
 ```
     $ wemo
 
-    Belkin WeMo Command Line Tool v1.0.25
+    Belkin WeMo Command Line Tool v1.0.26
 
     Script to control the Belkin WeMo power switch written entirely in shell
     and constructed out of commands that every computer should already have.
