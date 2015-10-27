@@ -2,7 +2,7 @@
 
 <img align="center" src="WeMo.jpg"/>
 
-Install with NPM by going to the [NPM package page](https://www.npmjs.com/package/belkin-wemo-command-line-tools#star), or, to get deep down and dirty in the code you can jump to the [GitHub project page](https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools)
+Install with NPM by going to the [NPM package page](https://www.npmjs.com/package/belkin-wemo-command-line-tools#star), or, to get deep down and dirty with the code you can jump to the [GitHub project page](https://github.com/agilemation/Belkin-WeMo-Command-Line-Tools)
 
 ...not that you can get very dirty in such beautiful code :-)
 
