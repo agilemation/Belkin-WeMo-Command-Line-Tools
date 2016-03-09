@@ -111,3 +111,7 @@ Escape character is '^]'.
 ```
 
 Enjoy!
+
+## Uses
+<img align="right" src="https://badoocdn.com/v2/-/-/i/badoo-logo.2.png"/>
+This script was written for those that want to control the Belkin WeMo series of devices from command line scripts, so not using your phone or any other interface to a human pressing a button.  Specifically I wrote it to allow the easy reboot of a USB hub that connected many mobile devices to a computer that performed automated regression testing of changes to software being developed at Badoo (8th largest social network).  This was needed to ensure that the phones connection was started afresh prior to a test run, both establishing a baseline and increasing stability of the tests about to be executed.  Similarly, if you wish to control any WeMo devices from a script this is a tool that will help you do that without much else to worry about.  If your device is not catered for at the moment, get in touch and I will work with you to add in the methods it uses.  Alternatively, just look at the source in the ‘wemo’ executable and submit a pull request.  :-)
